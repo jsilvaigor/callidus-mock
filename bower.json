@@ -1,0 +1,23 @@
+{
+  "name": "callidus-mock",
+  "version": "0.0.0",
+  "authors": [
+    "Igor Silva <igorjose15@gmail.com>"
+  ],
+  "description": "A mock to callidus-server project",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4"
+  }
+}

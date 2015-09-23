@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+<button id="rele001" type="button">Rele 001</button>
+<h1 id="rele001-data"></h1>
+<br/>
+<button id="rele002" type="button">Rele 002</button>
+<h1 id="rele002-data"></h1>
+<br/>
+<button id="rele003" type="button" disabled>Rele 003</button>
+<h1 id="rele003-data"></h1>
+<br/>
+
+<script src="/jquery/dist/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+</body>
+</html>
+
+<script>
+    var socket = io.connect('http://localhost:4200');
+    socket.on('connect', function(data) {
+        socket.emit('join', 'Aguardando informações...');
+    });
+
+    $('#rele001').bind('click',function(){
+        var data = {rele:$(this).attr('id')}
+        socket.emit('acionado',data)
+    });
+
+    $('#rele002').bind('click',function(){
+        var data = {rele:$(this).attr('id')}
+        socket.emit('acionado',data)
+    });
+
+    $('#rele003').bind('click',function(){
+        var data = {rele:$(this).attr('id')}
+        socket.emit('acionado',data)
+    });
+
+    socket.on('inicializa',function(data){
+        $.each(data,function(key,value){
+            $('#'+key+'-data').html(value.toString())
+        })
+
+    });
+
+    socket.on('resposta',function(data){
+        data = jQuery.parseJSON(data);
+        console.log(data);
+       $('#'+data.rele+'-data').html(data.ligado.toString())
+
+    });
+</script>
