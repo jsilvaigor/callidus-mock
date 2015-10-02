@@ -13,6 +13,7 @@ var atual = {
 };
 
 
+
 app.use(express.static(__dirname + '/bower_components'));
 app.get('/', function(req, res,next) {
     res.sendFile(__dirname + '/index.html');
@@ -56,5 +57,9 @@ io.on('connection', function(client) {
             client.emit('resposta','{"rele":"'+data.rele+'","ligado":true}')
         }
     });
+    client.on('getStatus',function(){
+        console.log("Status requisitado");
+        client.emit("status",JSON.stringify(atual))
+    })
 
 });
