@@ -7,9 +7,9 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var atual = {
-    rele001:false,
-    rele002:false,
-    rele003:false
+    relay001:false,
+    relay002:false,
+    relay003:false
 };
 
 
@@ -23,17 +23,17 @@ server.listen(4200);
 
 io.on('connection', function(client) {
     var sensorRele = function(){
-        if(atual.rele003){
-            atual.rele003 = false;
-            console.log('rele003 desligado');
-            client.emit('resposta','{"rele":"rele003","ligado":false}')
+        if(atual.relay003){
+            atual.relay003 = false;
+            console.log('relay003 desligado');
+            client.emit('resposta',{relay:"relay003",ligado:true})
 
         }else{
-            atual.rele003 = true;
-            console.log('rele003 ligado');
-            client.emit('resposta','{"rele":"rele003","ligado":true}')
+            atual.relay003 = true;
+            console.log('relay003 ligado');
+            client.emit('resposta',{relay:"relay003",ligado:false})
         }
-        setTimeout(sensorRele,1200000);
+        setTimeout(sensorRele,10000);
     };
 
 
@@ -46,15 +46,16 @@ io.on('connection', function(client) {
 
     sensorRele();
     client.on('acionado', function(data) {
-        if(atual[data.rele]){
-            atual[data.rele] = false;
-            console.log(data.rele+' desligado');
-            client.emit('resposta','{"rele":"'+data.rele+'","ligado":false}')
+        if(atual[data.relay]){
+            atual[data.relay] = false;
+            console.log(data.relay+' desligado');
+            client.emit('resposta',{"relay":data.relay,"ligado":false})
 
         }else{
-            atual[data.rele] = true;
-            console.log(data.rele+' ligado');
-            client.emit('resposta','{"rele":"'+data.rele+'","ligado":true}')
+            var dia = atual.relay003;
+            atual[data.relay] = true;
+            console.log(data.relay+' ligado');
+            client.emit('resposta',{"relay":data.relay,"ligado":true,dia:dia})
         }
     });
     client.on('getStatus',function(){

@@ -4,14 +4,14 @@
 
 </head>
 <body>
-<button id="rele001" type="button">Rele 001</button>
-<h1 id="rele001-data"></h1>
+<button id="relay001" type="button">Rele 001</button>
+<h1 id="relay001-data"></h1>
 <br/>
-<button id="rele002" type="button">Rele 002</button>
-<h1 id="rele002-data"></h1>
+<button id="relay002" type="button">Rele 002</button>
+<h1 id="relay002-data"></h1>
 <br/>
-<button id="rele003" type="button" disabled>Rele 003</button>
-<h1 id="rele003-data"></h1>
+<button id="relay003" type="button" disabled>Rele 003</button>
+<h1 id="relay003-data"></h1>
 <br/>
 
 <script src="/jquery/dist/jquery.min.js"></script>
@@ -25,18 +25,18 @@
         socket.emit('join', 'Aguardando informações...');
     });
 
-    $('#rele001').bind('click',function(){
-        var data = {rele:$(this).attr('id')}
+    $('#relay001').bind('click',function(){
+        var data = {relay:$(this).attr('id')}
         socket.emit('acionado',data)
     });
 
-    $('#rele002').bind('click',function(){
-        var data = {rele:$(this).attr('id')}
+    $('#relay002').bind('click',function(){
+        var data = {relay:$(this).attr('id')}
         socket.emit('acionado',data)
     });
 
-    $('#rele003').bind('click',function(){
-        var data = {rele:$(this).attr('id')}
+    $('#relay003').bind('click',function(){
+        var data = {relay:$(this).attr('id')}
         socket.emit('acionado',data)
     });
 
@@ -48,9 +48,9 @@
     });
 
     socket.on('resposta',function(data){
-        data = jQuery.parseJSON(data);
+
         console.log(data);
-       $('#'+data.rele+'-data').html(data.ligado.toString())
+       $('#'+data.relay+'-data').html(data.ligado.toString())
 
     });
 </script>
