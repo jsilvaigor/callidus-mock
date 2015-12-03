@@ -19,19 +19,19 @@ app.get('/', function(req, res,next) {
     res.sendFile(__dirname + '/index.html');
 });
 
-server.listen(4200);
+server.listen(3000);
 
 io.on('connection', function(client) {
     var sensorRele = function(){
         if(atual.relay003){
             atual.relay003 = false;
             console.log('relay003 desligado');
-            client.emit('resposta',{relay:"relay003",ligado:true})
+            client.emit('resposta',{relay:"relay003",ligado:false})
 
         }else{
             atual.relay003 = true;
             console.log('relay003 ligado');
-            client.emit('resposta',{relay:"relay003",ligado:false})
+            client.emit('resposta',{relay:"relay003",ligado:true})
         }
         setTimeout(sensorRele,10000);
     };
